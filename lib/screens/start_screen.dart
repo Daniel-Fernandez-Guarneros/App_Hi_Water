@@ -41,22 +41,56 @@ class _StartScreenState extends State<StartScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Text(
-          '0 %',
-          style: Theme.of(context).textTheme.headlineSmall,
+        _percentage(),
+        _smallDivider(),
+        _hydration(),
+      ],
+    );
+  }
+
+  Widget _percentage() {
+    return Column(
+      children: [
+        Stack(
+          children: [
+            const CircularProgressIndicator(
+              strokeWidth: 6,
+              value: 1.0,
+            ),
+            Text(
+              '0 %',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ],
         ),
         Text(
-          '1.0',
-          style: Theme.of(context).textTheme.headlineSmall,
+          'Hoy',
+          style: Theme.of(context).textTheme.bodySmall,
         ),
       ],
+    );
+  }
+
+  Widget _smallDivider() {
+    return const VerticalDivider(
+      color: Colors.amber,
+      thickness: 2,
+      width: 20,
+      indent: 10,
+      endIndent: 0,
+    );
+  }
+
+  Widget _hydration() {
+    return Text(
+      '1.0',
+      style: Theme.of(context).textTheme.headlineSmall,
     );
   }
 
   Widget _buttonReg() {
     return Center(
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(),
         onPressed: () {},
         child: const Text('Registrar'),
       ),
