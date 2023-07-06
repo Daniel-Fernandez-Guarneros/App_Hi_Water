@@ -38,30 +38,49 @@ class _StartScreenState extends State<StartScreen> {
   }
 
   Widget _indicators() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        _percentage(),
-        _smallDivider(),
-        _hydration(),
-      ],
+    return IntrinsicHeight(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _percentage(),
+          const SizedBox(
+            width: 10,
+          ),
+          _smallDivider(),
+          const SizedBox(
+            width: 10,
+          ),
+          _hydration(),
+        ],
+      ),
     );
   }
 
   Widget _percentage() {
     return Column(
       children: [
-        Stack(
-          children: [
-            const CircularProgressIndicator(
-              strokeWidth: 6,
-              value: 1.0,
-            ),
-            Text(
-              '0 %',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-          ],
+        SizedBox(
+          height: 60,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              const SizedBox(
+                width: 45,
+                height: 45,
+                child: CircularProgressIndicator(
+                  strokeWidth: 6,
+                  value: 0.3,
+                  color: Color.fromARGB(255, 62, 193, 236),
+                  backgroundColor: Color.fromARGB(255, 17, 50, 74),
+                ),
+              ),
+              Text(
+                '100 %',
+                style: Theme.of(context).textTheme.bodySmall,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
         Text(
           'Hoy',
@@ -73,8 +92,8 @@ class _StartScreenState extends State<StartScreen> {
 
   Widget _smallDivider() {
     return const VerticalDivider(
-      color: Colors.amber,
-      thickness: 2,
+      color: Color.fromARGB(255, 51, 51, 51),
+      thickness: 1,
       width: 20,
       indent: 10,
       endIndent: 0,
@@ -82,6 +101,18 @@ class _StartScreenState extends State<StartScreen> {
   }
 
   Widget _hydration() {
+    return Column(
+      children: [
+        _intervalBar(),
+        Text(
+          'Hidratación',
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+      ],
+    );
+  }
+
+  Widget _intervalBar() {
     return Text(
       '1.0',
       style: Theme.of(context).textTheme.headlineSmall,
