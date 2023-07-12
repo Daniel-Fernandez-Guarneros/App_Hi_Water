@@ -1,5 +1,6 @@
 import 'package:app_wear/assets/interval_progress_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({Key? key}) : super(key: key);
@@ -13,32 +14,55 @@ class _StartScreenState extends State<StartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 20.0,
-        centerTitle: false,
-        leadingWidth: 0,
-        title: Text(
+        toolbarHeight: 16.0,
+        leadingWidth: 100,
+        leading: Text(
           'HI WATER',
           style: Theme.of(context).textTheme.bodyMedium,
         ),
-        // actions: [],
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _totalMl(),
-          _indicators(),
-          _buttonReg(),
+        actions: [
+          _hour(),
         ],
       ),
+      body: SizedBox(
+        height: 160.0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _totalMl(),
+            _verticalGap(),
+            _indicators(),
+            _verticalGap(),
+            _buttonReg(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _hour() {
+    String formattedTime = DateFormat.Hm().format(DateTime.now());
+    return Text(
+      formattedTime,
+      style: Theme.of(context).textTheme.bodySmall,
+    );
+  }
+
+  Widget _verticalGap() {
+    return const SizedBox(
+      height: 5.5,
     );
   }
 
   Widget _totalMl() {
     return Column(
       children: [
-        Text(
-          '0 mL',
-          style: Theme.of(context).textTheme.headlineSmall,
+        SizedBox(
+          height: 25.0,
+          child: Text(
+            '0 mL',
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
         ),
         Text(
           'Faltan 2500 mL',
@@ -114,7 +138,7 @@ class _StartScreenState extends State<StartScreen> {
   Widget _hydration() {
     return Column(
       children: [
-        const IntervalProgressBar(),
+        const IntervalProgressBar(value: 0),
         //_intervalBar(),
         Text(
           'Hidratación',
@@ -136,7 +160,7 @@ class _StartScreenState extends State<StartScreen> {
       child: ConstrainedBox(
         constraints: const BoxConstraints.tightFor(
           width: 110,
-          height: 30,
+          height: 25,
         ),
         child: ElevatedButton(
           onPressed: () {},
