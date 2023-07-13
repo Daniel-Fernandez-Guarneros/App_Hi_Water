@@ -1,4 +1,5 @@
 import 'package:app_wear/assets/interval_progress_bar.dart';
+import 'package:app_wear/screens/drinks_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -163,7 +164,10 @@ class _StartScreenState extends State<StartScreen> {
           height: 25,
         ),
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const DrinksScreen()));
+          },
           child: const Text('Registrar'),
         ),
       ),
