@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app_wear/assets/interval_progress_bar.dart';
 import 'package:app_wear/screens/drinks_screen.dart';
 import 'package:flutter/material.dart';
@@ -42,10 +44,14 @@ class _StartScreenState extends State<StartScreen> {
   }
 
   Widget _hour() {
-    String formattedTime = DateFormat.Hm().format(DateTime.now());
-    return Text(
-      formattedTime,
-      style: Theme.of(context).textTheme.bodySmall,
+    return StreamBuilder(
+      stream: Stream.periodic(const Duration(seconds: 1)),
+      builder: (context, snapshot) {
+        return Text(
+          DateFormat.Hm().format(DateTime.now()),
+          style: Theme.of(context).textTheme.bodySmall,
+        );
+      },
     );
   }
 
@@ -165,8 +171,10 @@ class _StartScreenState extends State<StartScreen> {
         ),
         child: ElevatedButton(
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const DrinksScreen()));
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DrinksScreen()),
+            );
           },
           child: const Text('Registrar'),
         ),
