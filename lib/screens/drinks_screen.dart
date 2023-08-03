@@ -1,117 +1,112 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:app_wear/screens/start_screen.dart';
 
-class DrinksScreen extends StatelessWidget {
-  DrinksScreen({Key? key}) : super(key: key);
-
+class DrinkScreen extends StatelessWidget {
+  final double hidratacion;
+  final int valueWater;
+  DrinkScreen({Key? key, required this.hidratacion, required this.valueWater})
+      : super(key: key);
   final List<dynamic> typesOfDrinks = [
+    //water, title, background, color, hidratacion
     [
-      '240 mL',
-      'Un vaso de agua',
+      240,
+      'Vaso de agua',
       const Color.fromARGB(255, 26, 49, 70),
-      const Color.fromARGB(255, 139, 215, 255)
+      const Color.fromARGB(255, 139, 215, 255),
+      .5
     ],
     [
-      '550 mL',
-      'Una botella de agua',
+      550,
+      'Botella de agua',
       const Color.fromARGB(255, 26, 49, 70),
-      const Color.fromARGB(255, 139, 215, 255)
+      const Color.fromARGB(255, 139, 215, 255),
+      1
     ],
     [
-      '240 mL',
-      'Una taza de té',
+      240,
+      'Taza de té',
       const Color.fromARGB(255, 67, 47, 19),
-      const Color.fromARGB(255, 255, 207, 115)
+      const Color.fromARGB(255, 255, 207, 115),
+      .5
     ],
     [
-      '250 mL',
-      'Un vaso de leche',
+      250,
+      'Vaso de leche',
       const Color.fromARGB(255, 54, 34, 69),
-      const Color.fromARGB(255, 230, 164, 255)
+      const Color.fromARGB(255, 230, 164, 255),
+      .7
     ],
     [
-      '200 mL',
+      200,
       'Una taza de café',
       const Color.fromARGB(255, 67, 47, 19),
-      const Color.fromARGB(255, 255, 207, 115)
+      const Color.fromARGB(255, 255, 207, 115),
+      .2
     ],
     [
-      '200 mL',
-      'Leche saborizada',
+      200,
+      'Jugo de naranaja',
       const Color.fromARGB(255, 64, 31, 44),
-      const Color.fromARGB(255, 255, 157, 200)
+      const Color.fromARGB(255, 255, 157, 200),
+      .5
     ],
     [
-      '200 mL',
-      'Un vaso de refresco',
+      200,
+      'Vaso de refresco',
       const Color.fromARGB(255, 32, 29, 69),
-      const Color.fromARGB(255, 159, 147, 255)
+      const Color.fromARGB(255, 159, 147, 255),
+      .2
     ],
     [
-      '200 mL',
+      200,
       'Leche desnatada',
       const Color.fromARGB(255, 71, 59, 24),
-      const Color.fromARGB(255, 255, 249, 130)
+      const Color.fromARGB(255, 255, 249, 130),
+      .3
     ],
   ];
-
-  // Colores de las tarjetas:
-  // back: 26, 49, 70, font: 139, 215, 255
-  // back: 67, 47, 19, font: 255, 207, 115
-  // back: 54, 34, 69, font: 230, 164, 255
-  // back: 64, 31, 44, font: 255, 157, 200
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 16.0,
+        toolbarHeight: 20,
         leadingWidth: 100,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Text(
-            'Cancel',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
+        leading: Text(
+          "Water Counter",
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         actions: [
           _hour(context),
         ],
       ),
-      body: GridView.count(
-          primary: false,
-          padding: const EdgeInsets.all(5),
-          crossAxisSpacing: 3,
-          mainAxisSpacing: 5,
-          crossAxisCount: 2,
-          children: [
-            _oneCard(context, 0),
-            _oneCard(context, 1),
-            _oneCard(context, 2),
-            _oneCard(context, 3),
-            _oneCard(context, 4),
-            _oneCard(context, 5),
-            _oneCard(context, 6),
-            _oneCard(context, 7),
-          ]
-          /* List.generate(6, (index) {
-          return Center(
-            child: Text(
-              'Item $index',
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-          );
-        }), */
-          ),
+      body: GridView.count(crossAxisCount: 2, children: [
+        _oneCard(context, 0),
+        _oneCard(context, 1),
+        _oneCard(context, 2),
+        _oneCard(context, 3),
+        _oneCard(context, 4),
+        _oneCard(context, 5),
+        _oneCard(context, 6),
+        _oneCard(context, 7),
+      ]),
     );
   }
 
   Widget _oneCard(BuildContext context, int type) {
+    double newH = hidratacion + typesOfDrinks[type][4];
+    double newVW = valueWater.toDouble() + typesOfDrinks[type][0];
     return GestureDetector(
       onTap: () {
-        Navigator.pop(context);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) => StartScreen(
+                      hidratacion: newH,
+                      valueWater: newVW.toInt(),
+                    )),
+            (route) => false);
       },
       child: Center(
         child: SizedBox(
@@ -120,7 +115,6 @@ class DrinksScreen extends StatelessWidget {
           child: Card(
             elevation: 10.0,
             color: typesOfDrinks[type][2],
-            //color: const Color.fromARGB(255, 22, 45, 67),
             shape: RoundedRectangleBorder(
               side: BorderSide(
                 color: typesOfDrinks[type][2],
@@ -131,7 +125,7 @@ class DrinksScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  typesOfDrinks[type][0],
+                  '${typesOfDrinks[type][0]} ml',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -157,14 +151,9 @@ class DrinksScreen extends StatelessWidget {
   }
 
   Widget _hour(BuildContext context) {
-    return StreamBuilder(
-      stream: Stream.periodic(const Duration(seconds: 1)),
-      builder: (context, snapshot) {
-        return Text(
-          DateFormat.Hm().format(DateTime.now()),
-          style: Theme.of(context).textTheme.bodySmall,
-        );
-      },
+    return Text(
+      DateFormat.Hm().format(DateTime.now()),
+      style: Theme.of(context).textTheme.bodySmall,
     );
   }
 }
